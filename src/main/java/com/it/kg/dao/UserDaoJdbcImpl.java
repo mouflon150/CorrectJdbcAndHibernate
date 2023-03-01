@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserDaoJdbcImpl implements UserDao {
 
-    private Connection connection;
+    private final Connection connection;
 
     public UserDaoJdbcImpl() throws SQLException {
         connection = new JdbcUtil().getConnection();
@@ -40,6 +40,21 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (PSQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public User getById(long id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from users where id = " + id + ";");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (!resultSet.next()) {
+            System.out.println("There is nothing.");
+        }
+        User user = new User();
+        user.setId(resultSet.getLong("id"));
+        user.setFname(resultSet.getString("first_name"));
+        user.setLname(resultSet.getString("last_name"));
+        user.setAge((byte) resultSet.getInt("age"));
+        return user;
     }
 
     public void saveUser(String firstName, String lastName, byte age) throws SQLException {

@@ -3,14 +3,14 @@ package com.it.kg;
 
 import com.it.kg.model.User;
 import com.it.kg.service.UserService;
-import com.it.kg.service.UserServiceImpl;
+import com.it.kg.service.UserJdbcServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
 
 public class UserServiceTest {
-    private final UserService userService = new UserServiceImpl();
+    private final UserService userService = new UserJdbcServiceImpl();
 
     private final String testFirstName = "Kanat";
     private final String testLastName = "Subanov";
